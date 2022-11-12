@@ -96,7 +96,8 @@ function game()
     if(p==5 || c==5)
     {
         resultEle=document.querySelector('.result')
-       resultEle.innerHTML="<h1>YOU WIN THE GAME</h1>";
+        if(p===5) resultEle.innerHTML="<h1>YOU WIN THE GAME</h1>";
+        else  resultEle.innerHTML="<h1>YOU LOSE THE GAME</h1>";
        
     }
     
