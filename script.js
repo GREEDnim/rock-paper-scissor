@@ -1,13 +1,29 @@
 function getComputerChoice()
 {
-    x=Math.floor(Math.random()*3);
-    // console.log(x);
-
-    if(x===0) return "rock"
-    else if(x===1) return "paper"
-    else return "scissor"
-
+    x= Math.floor(Math.random()*3);
+    if(x==0) return 'rock';
+    if(x==1) return 'paper';
+    return 'scissor';
 }
+
+function chooseRock()
+{
+    playerChoice='rock'
+    game();
+};
+function choosePaper()
+{
+    playerChoice='paper'
+    game();
+};
+function chooseScissor()
+{
+    playerChoice='scissor'
+    game();
+};
+
+
+
 
 function playGround(c,p)
 {
@@ -26,29 +42,75 @@ function playGround(c,p)
 
 function game()
 {
-    let p=0,c=0;
-    for(let i=0;i<5;i++)
+    console.log(p+" "+c)
+    if(p<5 && c<5)
     {
-        playerSelection=prompt("enter you choice").toLocaleLowerCase();
-        computerSelection=getComputerChoice();
-        let ans=playGround(computerSelection,playerSelection);
+        
+        computerChoice=getComputerChoice();
+        let ans=playGround(computerChoice,playerChoice);
+
+        playerResultElement=document.createElement('div');
+        computerResultElement=document.createElement('div');
+
+        playerResultElement.innerText=`YOUR CHOICE: ${playerChoice.toUpperCase()}.`
+        computerResultElement.innerText=`COMPUTER CHOICE: ${computerChoice.toUpperCase()}`
+
+       resultEle=document.querySelector('.result')
+       resultEle.innerHTML="";
+       console.log(playerResultElement);
+       console.log(computerResultElement);
+        resultEle.appendChild(playerResultElement);
+        resultEle.appendChild(computerResultElement);
+
+        userScore=document.querySelector('.user-score');
+        cpuScore=document.querySelector('.cpu-score');
+        ansele=document.createElement('div');
+
+
         if(ans===1) 
         {
-            console.log(`You win , ${playerSelection.toLocaleUpperCase()} beats ${computerSelection.toLocaleUpperCase()}`)
             p++;
+            // console.log(`You win , ${playerSelection.toLocaleUpperCase()} beats ${computerSelection.toLocaleUpperCase()}`)
+            ansele.innerText="YOU LOSE THIS ROUND";
+            resultEle.appendChild(ansele);
+            userScore.innerText=`${p}`;
+            cpuScore.innerText=`${c}`;
         }
         else if(ans===0)
         {
-            console.log(`You lose , ${computerSelection.toLocaleUpperCase()} beats ${playerSelection.toLocaleUpperCase()}`)
+            // console.log(`You lose , ${computerSelection.toLocaleUpperCase()} beats ${playerSelection.toLocaleUpperCase()}`)
             c++;
+            ansele.innerText="YOU LOSE THIS ROUND";
+            resultEle.appendChild(ansele);
+            userScore.innerText=`${p}`;
+            cpuScore.innerText=`${c}`;
         }
-        else console.log("Its a draw")
+        else 
+        {
+            ansele.innerText="WOW IT IS A DRAW";
+            resultEle.appendChild(ansele);
+        }
     
     
     }
-    if(p==c) console.log("WOW you both win")
-    else if(p>c) console.log("Congratulations , Youvw won the match")
-    else console.log("Sorry, youve lost the match")
+    if(p==5 || c==5)
+    {
+        resultEle=document.querySelector('.result')
+       resultEle.innerHTML="<h1>YOU WIN THE GAME</h1>";
+       
+    }
+    
 }
+rock=document.querySelector(".rock")
+paper=document.querySelector(".paper")
+scissor=document.querySelector(".scissor")
 
-game()
+rock.addEventListener('click',chooseRock);
+paper.addEventListener('click',choosePaper);
+scissor.addEventListener('click',chooseScissor);
+playerchoice=-1;
+let p=0,c=0;
+
+reload=document.querySelector('.play-again');
+reload.addEventListener('click',()=>{window.location.reload()} );
+ 
